@@ -1,5 +1,7 @@
 import axios from "axios";
 import cheerio from "cheerio";
+import fs from "fs";
+
 const url = "https://wakatime.com/leaders?country_code=CM";
 const AxiosInstance = axios.create();
 
@@ -25,5 +27,9 @@ AxiosInstance.get(url)
       users.push({ index: i, name, coded, average, languages });
     });
     console.log(users);
+    const jsonContent = JSON.stringify(users);
+    fs.writeFile("./users.json", jsonContent, "utf8", (error) => {
+      if (error) console.log(error);
+    });
   })
   .catch(console.error);
